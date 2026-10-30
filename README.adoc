@@ -15,22 +15,43 @@ See the official documentation on https://docs.teragrep.com[docs.teragrep.com].
 
 Uses spark-submit.
 
-== How to [compile/use/implement]
+== Requirements
+
+Requires Spark installation to be available, including `spark-submit` binary.
+
+Requires the following Hadoop configurations from a valid cluster to be available in `HADOOP_CONF_DIR`:
+
+- `core-site.xml`
+
+- `hdfs-site.xml`
+
+- `yarn-site.xml`
+
+Requires `interpreter.json` from `zep_01` to be available.
+
+Requires `pth_10-shaded.jar` to be available.
+
+== How to use
 
 === Usage
+
+Replace any `/path/to/` to a valid path to the wanted resource.
+
+Connecting to Kerberos secured clusters requires you to set `export KRB5CCNAME="/tmp/krb5cc_${UID}";` and then running `kinit` with valid credentials.
 
 Example without arguments
 
 [source,shell]
 ----
-HADOOP_CONF_DIR=/opt/teragrep/hdp_03/etc/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /opt/teragrep/spk_02/bin/spark-submit \
+HADOOP_CONF_DIR=/path/to/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /path/to/spark/bin/spark-submit \
   --verbose \
   --deploy-mode client \
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,/opt/teragrep/spk_03/lib/*.jar \
-  --files interpreter.json pth_16-jar-with-dependencies.jar
+  --jars /path/to/pth_10-shaded.jar \
+  --files /path/to/interpreter.json \
+  /path/to/pth_16-jar-with-dependencies.jar
 ----
 
 Results into
@@ -44,17 +65,16 @@ Custom query
 
 [source,shell]
 ----
-HADOOP_CONF_DIR=/opt/teragrep/hdp_03/etc/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /opt/teragrep/spk_02/bin/spark-submit \
+HADOOP_CONF_DIR=/path/to/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /path/to/spark/bin/spark-submit \
   --verbose \
   --deploy-mode client \
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,/opt/teragrep/spk_03/lib/*.jar \
-  --files interpreter.json \
-  pth_16-jar-with-dependencies.jar \
+  --jars /path/to/pth_10-shaded.jar \
+  --files /path/to/interpreter.json \
+  /path/to/pth_16-jar-with-dependencies.jar \
   '| makeresults count=1 | eval _raw="this is a custom query"'
-
 ----
 
 Results into
@@ -68,15 +88,15 @@ Results can be piped into a file
 
 [source,shell]
 ----
-JAVA_HOME=/usr/lib/jvm/java-11 /opt/teragrep/spk_02/bin/spark-submit \
+HADOOP_CONF_DIR=/path/to/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /path/to/spark/bin/spark-submit \
   --verbose \
   --deploy-mode client \
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,/opt/teragrep/spk_03/lib/*.jar \
-  --files interpreter.json \
-  pth_16-jar-with-dependencies.jar \
+  --jars /path/to/pth_10-shaded.jar \
+  --files /path/to/interpreter.json \
+  /path/to/pth_16-jar-with-dependencies.jar \
   '| makeresults count=1 | eval _raw="this is a custom query"' | tee output.json
 ----
 
