@@ -35,7 +35,7 @@ Requires `pth_10-shaded.jar` to be available.
 
 === Usage
 
-Connecting to Kerberos secured clusters requires you to set `export KRB5CCNAME="/tmp/krb5cc_${UID}";` and then running `kinit` with valid credentials.
+Connecting to Kerberos secured clusters requires you to set `export KRB5CCNAME="/tmp/krb5cc_${UID}";` and then running `kinit` with valid credentials. You can use custom `krb5.conf` by setting `export SPARK_SUBMIT_OPTS="-Djava.security.krb5.conf=custom-krb5.conf"` before running.
 
 Example without arguments
 
