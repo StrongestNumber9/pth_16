@@ -31,6 +31,8 @@ Requires `interpreter.json` from `zep_01` to be available.
 
 Requires `pth_10-shaded.jar` to be available.
 
+Uses `spk_02` and `hdp_03` libraries from the running cluster and they do not need to be locally available as long as cluster has them.
+
 == How to use
 
 === Usage
@@ -47,7 +49,7 @@ HADOOP_CONF_DIR=/opt/teragrep/hdp_03/etc/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar \
+  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,local:/opt/teragrep/spk_02/jars/*,local:/opt/teragrep/hdp_03/share/hadoop/common/*,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar \
   --files interpreter.json \
   pth_16-jar-with-dependencies.jar
 ----
@@ -69,7 +71,7 @@ HADOOP_CONF_DIR=/opt/teragrep/hdp_03/etc/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar \
+  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,local:/opt/teragrep/spk_02/jars/*,local:/opt/teragrep/hdp_03/share/hadoop/common/*,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar \
   --files interpreter.json \
   pth_16-jar-with-dependencies.jar \
   '| makeresults count=1 | eval _raw="this is a custom query"'
@@ -92,7 +94,7 @@ HADOOP_CONF_DIR=/opt/teragrep/hdp_03/etc/hadoop JAVA_HOME=/usr/lib/jvm/java-11 /
   --master yarn \
   --executor-memory 5G \
   --total-executor-cores 8 \
-  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar \
+  --jars /opt/teragrep/pth_10/lib/pth_10-shaded.jar,local:/opt/teragrep/spk_02/jars/*,local:/opt/teragrep/hdp_03/share/hadoop/common/*,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar,local:/opt/teragrep/hdp_03/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar \
   --files interpreter.json \
   pth_16-jar-with-dependencies.jar \
   '| makeresults count=1 | eval _raw="this is a custom query"' | tee output.json
